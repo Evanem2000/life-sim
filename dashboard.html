@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Simulator Dashboard</title>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore-compat.js"></script>
+  
+  <script>
+    // ⚠️ This initializes the Firebase App object, resolving the 'no-app' error.
+    const firebaseConfig = {
+      apiKey: "AIzaSyA1aXYgCVU9P9kN-7sKymkN9MmRq5fbbZQ",
+      authDomain: "life-simulator-90019.firebaseapp.com",
+      projectId: "life-simulator-90019",
+      storageBucket: "life-simulator-90019.appspot.com",
+      messagingSenderId: "351428828952",
+      appId: "1:351428828952:web:ff1c7a6d9568369c24086d"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <style>
+    /* Container for all stat cards */
+    .stats-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      width: 100%;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    /* Individual stat cards styling */
+    .stat-card {
+      background: #2b2b3d;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    .stat-name {
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Progress bar container */
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background: #1e1e2f;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    /* Progress fill inside the bar (animated) */
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #4f8ef7, #6bc1ff);
+      width: 0%;
+      border-radius: 10px;
+      transition: width 0.5s ease-in-out;
+    }
+
+    /* Container for action buttons */
+    .buttons-container {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* Common styling for action buttons */
+    .action-button {
+      padding: 0.75rem 1rem;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(90deg, #ff7f50, #ffb347);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .action-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    /* Logout button specific gradient */
+    #logout-btn { background: linear-gradient(90deg, #f54242, #ff7474); }
+  </style>
+</head>
+<body>
+  <main>
+    <h1 id="welcome-title">Loading...</h1>
+
+    <div class="stats-container">
+      <div class="stat-card">
+        <div class="stat-name">XP</div>
+        <div class="progress-bar"><div id="xp-fill" class="progress-fill"></div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-name">Health</div>
+        <div class="progress-bar"><div id="health-fill" class="progress-fill"></div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-name">Energy</div>
+        <div class="progress-bar"><div id="energy-fill" class="progress-fill"></div></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-name">Happiness</div>
+        <div class="progress-bar"><div id="happiness-fill" class="progress-fill"></div></div>
+      </div>
+    </div>
+
+    <div class="buttons-container">
+      <button class="action-button" id="rest-btn">Rest (+Health)</button>
+      <button class="action-button" id="train-btn">Train (+Energy)</button>
+      <button class="action-button" id="play-btn">Play (+Happiness)</button>
+      <button class="action-button" id="gainxp-btn">Gain XP</button>
+    </div>
+
+    <div style="margin-top: 2rem; text-align:center;">
+      <button class="action-button" id="logout-btn">Logout</button>
+    </div>
+  </main>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
