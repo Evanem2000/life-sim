@@ -83,3 +83,28 @@ if (loginForm) {
     }
   });
 }
+
+// --- Forgot Password Link ---
+const forgotPasswordLink = document.getElementById('forgot-password-link');
+
+if (forgotPasswordLink) {
+  forgotPasswordLink.addEventListener('click', async (e) => {
+    e.preventDefault(); // Prevent default anchor behavior
+    const email = document.getElementById('email').value.trim();
+
+    if (!email) {
+      alert("Please enter your email in the login form first.");
+      return;
+    }
+
+    try {
+      // Send password reset email via Firebase Auth
+      await auth.sendPasswordResetEmail(email);
+      alert(`Password reset email sent to ${email}. Check your inbox.`);
+      console.log(`Password reset email sent to ${email}`);
+    } catch (error) {
+      console.error("Password reset error:", error);
+      alert(`Failed to send password reset email: ${error.message}`);
+    }
+  });
+}
