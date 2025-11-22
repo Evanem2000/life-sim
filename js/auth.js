@@ -1,4 +1,4 @@
-// 1️⃣ Firebase config — replace with your actual project config
+// Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyA1aXYgCVU9P9kN-7sKymkN9MmRq5fbbZQ",
   authDomain: "life-simulator-90019.firebaseapp.com",
@@ -8,12 +8,12 @@ const firebaseConfig = {
   appId: "1:351428828952:web:ff1c7a6d9568369c24086d"
 };
 
-// 2️⃣ Initialize Firebase
+// Initialize Firebase
 const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// 3️⃣ Signup form listener
+// Signup form listener
 const signupForm = document.getElementById('signup-form');
 
 if (signupForm) {
@@ -28,14 +28,14 @@ if (signupForm) {
     console.log({ username, email });
 
     try {
-      // 4️⃣ Create user in Firebase Auth
+      // Create user in Firebase Auth
       const userCredential = await auth.createUserWithEmailAndPassword(email, password);
       const user = userCredential.user;
       console.log("Firebase user created:", user.uid);
 
-      // 5️⃣ Create Firestore document with default stats and username
+      // Create Firestore document with default stats and username
       await db.collection('users').doc(user.uid).set({
-        username: username,          // ✅ Store username
+        username: username,          // Store username
         xp: 0,                       // Default XP
         stats: {
           health: 50,                // Default Health
@@ -45,7 +45,7 @@ if (signupForm) {
       });
       console.log("Firestore document created for user with username");
 
-      // 6️⃣ Redirect to dashboard
+      // Redirect to dashboard
       console.log("Redirecting to dashboard.html...");
       setTimeout(() => {
         window.location.href = 'dashboard.html'; // Redirect after Firestore write
@@ -58,9 +58,7 @@ if (signupForm) {
   });
 }
 
-// ------------------
-// 7️⃣ Login form listener
-// ------------------
+// Login form listener
 const loginForm = document.getElementById('login-form');
 
 if (loginForm) {

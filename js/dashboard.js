@@ -1,6 +1,6 @@
 // dashboard.js - Using Compatibility SDK Syntax (Global 'firebase' object)
 
-// 🔥 Access services globally via the 'firebase' object
+// Access services globally via the 'firebase' object
 const auth = firebase.auth();
 const db = firebase.firestore();
 
@@ -19,9 +19,6 @@ const logoutBtn = document.getElementById('logout-btn');
 
 let userDocRef = null;
 
-// ------------------
-// 1️⃣ Auth check
-// ------------------
 // Checks if the user is logged in
 auth.onAuthStateChanged(user => {
   if (!user) {
@@ -33,15 +30,12 @@ auth.onAuthStateChanged(user => {
   // Reference to user's Firestore document (Compatibility syntax)
   userDocRef = db.collection('users').doc(user.uid);
 
-  // ------------------
-  // 2️⃣ Real-time updates (Handles both name and stats)
-  // ------------------
   // Attaches a real-time listener to the document (Compatibility syntax)
   userDocRef.onSnapshot(docSnap => {
     if (docSnap.exists) {
       const data = docSnap.data();
       
-      // ✅ FIX: Get the 'username' from the Firestore document
+      // FIX: Get the 'username' from the Firestore document
       // Fallback to the email prefix if the username is somehow missing
       const username = data.username || user.email.split('@')[0] || "Player";
       welcomeTitle.textContent = `Welcome, ${username}!`; 
@@ -62,9 +56,7 @@ auth.onAuthStateChanged(user => {
   });
 });
 
-// ------------------
-// 3️⃣ Helper: increment a stat
-// ------------------
+// incrementStat function to update stats in Firestore
 const incrementStat = async (field) => {
   if (!userDocRef) {
     console.warn("User document reference is not set.");
@@ -81,17 +73,13 @@ const incrementStat = async (field) => {
   }
 };
 
-// ------------------
-// 4️⃣ Button actions
-// ------------------
+// Button event listeners
 restBtn.addEventListener('click', () => incrementStat('stats.health'));
 trainBtn.addEventListener('click', () => incrementStat('stats.energy'));
 playBtn.addEventListener('click', () => incrementStat('stats.happiness'));
 gainXpBtn.addEventListener('click', () => incrementStat('xp'));
 
-// ------------------
-// 5️⃣ Logout
-// ------------------
+// Logout button listener
 logoutBtn.addEventListener('click', async () => {
   try {
     await auth.signOut(); // Compatibility syntax
