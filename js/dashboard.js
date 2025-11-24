@@ -88,3 +88,12 @@ logoutBtn.addEventListener('click', async () => {
     console.error("Logout failed:", error);
   }
 });
+
+// Settings button redirects to settings page
+const settingsBtn = document.getElementById('settings-btn');
+
+if (settingsBtn) {
+  settingsBtn.addEventListener('click', () => {
+    window.location.href = 'settings.html';
+  });
+}
